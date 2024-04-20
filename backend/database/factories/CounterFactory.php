@@ -4,10 +4,11 @@ namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 
+
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Note>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Counter>
  */
-class NoteFactory extends Factory
+class CounterFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -17,8 +18,9 @@ class NoteFactory extends Factory
     public function definition(): array
     {
         return [
-            'note'=>fake()->realText(2000),
-            'user_id'=> 1
+            'key'=>'invoice',
+            'prefix'=> 'INV',
+            'value'=> 20000
         ];
     }
 }
