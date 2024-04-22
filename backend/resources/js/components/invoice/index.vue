@@ -1,3 +1,25 @@
+<script setup>
+    import axios from 'axios';
+    import {onMounted, ref} from 'vue'
+
+
+    let invoices = ref([])
+    let searchInvoice = ref([]);
+
+    onMounted(async () => {
+        getInvoices()
+        // console.log('is this working')
+    })
+    const getInvoices = async()=>{
+        let response = await axios.get("/all_voices")
+        // console.log('Who is the main person behind the laravel')
+        console.log('response', response)
+        // invoices.value = response.data.invoices
+    }
+    // const search = async()=>{
+    //     let response = await axios.get('/api/search_invoice?s =' +searchInvoice.value);
+    // }
+</script>
 <template>
     <div class="container">
         <!--==================== INVOICE LIST ====================-->
@@ -58,13 +80,20 @@
                 </div>
 
                 <!-- item 1 -->
-                <div class="table--items">
+                <div class="table--items" v-for="item in invoices" :key="item.id" v-if="invoices.length > 0">
+                   <p >
+                    what is wrong
+                   </p> 
                     <a href="#" class="table--items--transactionId">#093654</a>
-                    <p>Jan 18, 9:31am</p>
-                    <p>#093654</p>
-                    <p>Jonathan Yu</p>
-                    <p>Jan 18, 9:31am</p>
-                    <p>$ 16,943</p>
+                    <p>{{ item.date }}</p>
+                    <p>{{ item.number }}</p>
+                    <p v-if="item.number">{{ item.customer.firsname }}</p>
+                    <p v-else></p>
+                    <p>{{ item.due_date }}</p>
+                    <p> $ {{ item.total }}</p>
+                </div>
+                <div class="table--items" v-else>
+                    <p>Invoice not found</p>
                 </div>
             </div>
         </div>
@@ -136,7 +165,6 @@
                         </button>
                     </div>
                 </div>
-
                 <div class="table__footer">
                     <div class="document-footer">
                         <p>Terms and Conditions</p>
@@ -421,7 +449,7 @@
                     </div>
 
                     <!-- item 1 -->
-                    <div class="table--items2">
+                    <div class="table--items2" v-for="item in invoice":key="item.id" v-if="invoices.length > 0">
                         <p>#093654 vjxhchkvhxc vkxckvjkxc jkvjxckvjkx</p>
                         <p>
                             <input type="text" class="input" />
