@@ -6,19 +6,30 @@
     let invoices = ref([])
     let searchInvoice = ref([]);
 
+
     onMounted(async () => {
         getInvoices()
         // console.log('is this working')
     })
     const getInvoices = async()=>{
-        let response = await axios.get("/all_voices")
+        let response = await axios.get("/api/get_all_invoices")
         // console.log('Who is the main person behind the laravel')
         console.log('response', response)
-        // invoices.value = response.data.invoices
+        invoices.value = response.data.invoices
     }
-    // const search = async()=>{
-    //     let response = await axios.get('/api/search_invoice?s =' +searchInvoice.value);
-    // }
+    const search = async()=>{
+        let response = await axios.get('/api/search_invoice?s='+searchInvoice.value);
+        console.log('response', response.data.invoices);
+        invoices.value = response.data.invoices;
+        
+    }
+
+    /*
+    *** follow these three rule everyday, so you will not waste hours of time dubugging, that is not worth your time ***
+    1. be concious -> this will help you to get rid of silly spelling mistakes
+    2. keep basic clean -> this will help you to have build your knowledge grow, instead of becoming stagnant
+    3. keep learning -> if you hate learing new things, you have already lost the battle, even before its begins. 
+    */
 </script>
 <template>
     <div class="container">
@@ -36,7 +47,7 @@
             <div class="table card__content">
                 <div class="table--filter">
                     <span class="table--filter--collapseBtn">
-                        <i class="fas fa-ellipsis-h"></i>
+                        <i class="fas fa-ellipsis-h"></i> 
                     </span>
                     <div class="table--filter--listWrapper">
                         <ul class="table--filter--list">
@@ -65,7 +76,8 @@
                         <input
                             class="table--search--input"
                             type="text"
-                            placeholder="Search invoice"
+                            placeholder="Search invoices"
+                            v-model="searchInvoice" @keyup = "search()"
                         />
                     </div>
                 </div>
@@ -80,15 +92,16 @@
                 </div>
 
                 <!-- item 1 -->
-                <div class="table--items" v-for="item in invoices" :key="item.id" v-if="invoices.length > 0">
+                <div class="table--items" v-for="item in invoices":key="item.id" v-if="invoices.length > 0">
+                    <!-- this all inside the for loop -->
                    <p >
-                    what is wrong
+                    {{ item.number }}
                    </p> 
                     <a href="#" class="table--items--transactionId">#093654</a>
                     <p>{{ item.date }}</p>
                     <p>{{ item.number }}</p>
-                    <p v-if="item.number">{{ item.customer.firsname }}</p>
-                    <p v-else></p>
+                    <!-- <p v-if="item.number">{{ item.customer.firstname }}</p>
+                    <p v-else></p> -->
                     <p>{{ item.due_date }}</p>
                     <p> $ {{ item.total }}</p>
                 </div>
@@ -449,7 +462,7 @@
                     </div>
 
                     <!-- item 1 -->
-                    <div class="table--items2" v-for="item in invoice":key="item.id" v-if="invoices.length > 0">
+                    <div class="table--items2" >
                         <p>#093654 vjxhchkvhxc vkxckvjkxc jkvjxckvjkx</p>
                         <p>
                             <input type="text" class="input" />

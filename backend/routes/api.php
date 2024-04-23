@@ -2,7 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\COntrollers\InvoiceController;
+use App\Http\Controllers\InvoiceController;
 
 
 
@@ -10,4 +10,5 @@ Route::get('/user', function (Request $request){
     return $request->user();
 })->middleware('auth:sanctum');
 
-//Route::get('/all_voices', [InvoiceController::class, 'all_voices' ]);
+Route::get('/get_all_invoices', [InvoiceController::class, 'get_all_invoices' ]);
+Route::get('/search_invoice', [InvoiceController::class, 'search_invoice' ]);
